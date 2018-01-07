@@ -94,6 +94,22 @@ function Instrument()
     marabu.song.mJammer_update();
   }
 
+  this.copyFrom = function(from)
+  {
+    for(family_id in this.controls){
+      for(control_id in this.controls[family_id]){
+        var ctrl = this.controls[family_id][control_id];
+        var ctrl_storage = this.get_storage(family_id+"_"+control_id);
+        var value = marabu.song.control_at(from,ctrl_storage);
+        if (ctrl_storage !== null && value !== undefined) {
+          ctrl.override(value);
+          ctrl.save();
+        }
+      }
+    }
+    marabu.song.mJammer_update();
+  }
+
   this.get_storage = function(id)
   {
     // Env
